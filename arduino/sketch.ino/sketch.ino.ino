@@ -122,5 +122,5 @@ void loop(){
   switchControl(voltage);
   displayData(voltage,current,temperature);
     
-  delay(2000);
+  delay(10000);
 }
