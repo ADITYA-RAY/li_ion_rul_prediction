@@ -33,7 +33,7 @@ float computeVoltage(){
   float in_voltage = 0.0;
   int adc_value = 0;
   adc_value = analogRead(voltagePin);
-  adc_voltage  = (adc_value * 5) / 1024.0; 
+  adc_voltage  = (adc_value * 4.8) / 1024.0; 
   in_voltage = adc_voltage / (R2/(R1+R2)) ;
   return in_voltage;
 }
@@ -94,5 +94,5 @@ void loop(){
   switchControl(voltage);
   displayData(voltage + 0.04,current,temperature);
     
-  delay(2000);
+  delay(10000);
 }

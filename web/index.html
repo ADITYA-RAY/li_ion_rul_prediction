@@ -3,172 +3,112 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
     <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-    https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css
-    <title>EnerView</title>
+    <title>Document</title>
   </head>
   <body>
-    <div class="container-fluid">
-    <nav
-      class="navbar fixed-top navbar-expand-lg bg-body-tertiary border-bottom border-body"
-    >
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+    <div class="dashboard">
+      <div class="profile">
+        <h2>
+          Lithium Ion Battery LifeCycle Optimization and Remaining Useful Life
+          Prediction using RNN
+        </h2>
+      </div>
+      <div class="schedule-table">
+        <h2>Real Time Data</h2>
+        <p>Last updated - <span id="currentTime"></span></p>
+        <div class="table-wrap">
+          <table>
+            <tr>
+              <th>Parameter</th>
+              <th>Value</th>
+            </tr>
+            <tr>
+              <td>Cycle Index</td>
+              <td id="currentCycleIndex">loading...</td>
+            </tr>
+            <tr>
+              <td>SOC<sub>e</sub></td>
+              <td id="currentSoce">loading...</td>
+            </tr>
+            <tr>
+              <td>SOC<sub>c</sub></td>
+              <td id="currentSocc">loading...</td>
+            </tr>
+            <tr>
+              <td>Voltage</td>
+              <td id="currentVoltage">loading...</td>
+            </tr>
+            <tr>
+              <td>Current</td>
+              <td id="currentCurrent">loading...</td>
+            </tr>
+            <tr>
+              <td>Temperature</td>
+              <td id="currentTemperature">loading...</td>
+            </tr>
+          </table>
         </div>
       </div>
-    </nav>
-    <br>
-    <br>
-    <br>
-    <div class="container-xxl">
-      <div class="row">
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title"><i class="fa-solid fa-bolt"></i>Voltage</h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
+
+      <div class="exercise-table">
+        <h2 style="padding-bottom: 25px">
+          ON/OFF Control
+          <label class="switch">
+            <input type="checkbox" />
+            <span class="slider round"></span>
+          </label>
+        </h2>
+
+        <div class="table-wrap">
+          <table>
+            <tr>
+              <td>Status</td>
+              <td>Idle</td>
+            </tr>
+          </table>
+        </div>
+        <div class="table-wrap" style="margin: 20px 0px">
+          <div class="personal-bests">
+            <h2>Cell Specification</h2>
+            <ul>
+              <li>Type: LiFePo4</li>
+              <li>Make: Orange IFR32650</li>
+              <li>Nominal Voltage: 3.2 V</li>
+              <li>Peak Voltage: 3.65 V</li>
+              <li>Cell Capacity: 6000 mAh</li>
+            </ul>
           </div>
         </div>
-        <div class="col"><div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-          </div>
-        </div></div>
-        <div class="col"><div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-          </div>
-        </div></div>
-        <div class="col"><div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-          </div>
-        </div></div>
+      </div>
+
+      <div class="calories">
+        <h2>Voltage Curve</h2>
+        <canvas id="myChart" width="400" height="200"></canvas>
+      </div>
+
+      <div class="personal-bests">
+        <h2>Charging Time V/S Discharging Time</h2>
+        <canvas id="donut"></canvas>
+      </div>
+
+      <div class="challenges">
+        <h2>Current Curve</h2>
+        <canvas id="current"></canvas>
+      </div>
+
+      <div class="activity-feed">
+        <h2>Temperature Curve</h2>
+        <canvas id="temperature"></canvas>
+      </div>
+
+      <div class="socc-graph">
+        <h2>State of Charge Curve</h2>
+        <canvas  width="400" id="socc"></canvas>
       </div>
     </div>
-    <br>
-    <div class="container-xxl">
-      <div class="row">
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-        </div>
-        <div class="col"><div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-          </div>
-        </div></div>
-        <div class="col"><div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-          </div>
-        </div></div>
-        <div class="col"><div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-          </div>
-        </div></div>
-      </div>
-    </div>
-  </div>
+
+    <script src="script.js"></script>
   </body>
 </html>

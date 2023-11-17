@@ -2,7 +2,6 @@ import gspread
 import time
 from oauth2client.service_account import ServiceAccountCredentials
 from pprint import pprint as pp
-
 import serial
 from datetime import datetime
 
@@ -24,9 +23,6 @@ try:
 
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 sheet.insert_row([timestamp, voltage, current, temperature, mode],2)
-
-
-
 
             except KeyboardInterrupt:
                 print("Data logging stopped by the user.")
