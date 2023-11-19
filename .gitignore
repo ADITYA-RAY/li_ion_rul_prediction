@@ -1,4 +1,2 @@
 /env
-/api/credentials.json
-/backupImages  
-/data
+/backend/lion_dataset.db

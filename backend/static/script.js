@@ -6,28 +6,31 @@ var socc = [];
 
 
 window.onload = function getData() {
-  fetch("http://192.168.29.57:5000/")
+  fetch("http://127.0.0.1:5000//api/instant_data")
     .then((response) => response.json())
     .then((data) => {
+      console.log(data[0])
       var currentTime = document.getElementById("currentTime");
       var currentVoltage = document.getElementById("currentVoltage");
       var currentCurrent = document.getElementById("currentCurrent");
       var currentTemperature = document.getElementById("currentTemperature");
+      var currentSocc = document.getElementById("currentSocc");
 
 
-      currentTime.innerHTML = data[0]["Timestamp"];
-      currentVoltage.innerHTML = `${data[0]["Voltage (V)"]} V`;
-      currentCurrent.innerHTML = `${data[0]["Current (A)"]} A`;
-      currentTemperature.innerHTML = `${data[0]["Temperature"]} °C`;
 
-      console.log("len", data.length);
+      currentTime.innerHTML = data.pop()[1];
+      currentVoltage.innerHTML = `${data.pop()[0]} V`;
+      currentCurrent.innerHTML = `${data.pop()[2]} A`;
+      currentTemperature.innerHTML = `${data.pop()[3]} °C`;
+      currentSocc.innerHTML = `${data.pop()[5]}%`;
+
 
       for (var j = 0; j < data.length; j++) {
         index.push(j);
-        voltage.push(data[j]["Voltage (V)"]);
-        current.push(data[j]["Current (A)"]);
-        temperature.push(data[j]["Temperature"]);
-        socc.push(data[j]["SOCC"]);
+        voltage.push(data[j][0]);
+        current.push(data[j][2]);
+        temperature.push(data[j][3]);
+        socc.push(data[j][5]);
 
 
       }
