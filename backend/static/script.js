@@ -4,35 +4,29 @@ var current = [];
 var temperature = [];
 var socc = [];
 
-
 window.onload = function getData() {
   fetch("http://127.0.0.1:5000//api/instant_data")
     .then((response) => response.json())
     .then((data) => {
-      console.log(data[0])
+      console.log(data[0]);
       var currentTime = document.getElementById("currentTime");
       var currentVoltage = document.getElementById("currentVoltage");
       var currentCurrent = document.getElementById("currentCurrent");
       var currentTemperature = document.getElementById("currentTemperature");
       var currentSocc = document.getElementById("currentSocc");
 
-
-
       currentTime.innerHTML = data.pop()[1];
-      currentVoltage.innerHTML = `${data.pop()[0]} V`;
-      currentCurrent.innerHTML = `${data.pop()[2]} A`;
-      currentTemperature.innerHTML = `${data.pop()[3]} °C`;
+      currentVoltage.innerHTML = `${data.pop()[2]} V`;
+      currentCurrent.innerHTML = `${data.pop()[3]} A`;
+      currentTemperature.innerHTML = `${data.pop()[4]} °C`;
       currentSocc.innerHTML = `${data.pop()[5]}%`;
-
 
       for (var j = 0; j < data.length; j++) {
         index.push(j);
-        voltage.push(data[j][0]);
-        current.push(data[j][2]);
-        temperature.push(data[j][3]);
+        voltage.push(data[j][2]);
+        current.push(data[j][3]);
+        temperature.push(data[j][4]);
         socc.push(data[j][5]);
-
-
       }
     })
     .catch((error) => console.error("Error fetching data:", error))
@@ -169,7 +163,9 @@ window.onload = function getData() {
           },
         },
       });
-      var ctxTemperature = document.getElementById("temperature").getContext("2d");
+      var ctxTemperature = document
+        .getElementById("temperature")
+        .getContext("2d");
       var chartTemperature = new Chart(ctxTemperature, {
         type: "line",
         data: {
@@ -283,3 +279,32 @@ window.onload = function getData() {
       });
     });
 };
+
+function changeStatus() {
+  const status = document.getElementById("changeStatus").checked;
+  const apiUrl = "http://127.0.0.1:5000/api/status";
+  const headers = new Headers({
+    "Content-Type": "application/json",
+  });
+  const requestBody = JSON.stringify({
+    status: status,
+  });
+
+  fetch(apiUrl, {
+    method: "POST",
+    headers: headers,
+    body: requestBody,
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Response:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}

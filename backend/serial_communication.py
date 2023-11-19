@@ -5,39 +5,57 @@ from database import create_db, insert_to_instant_db, close_db, get_prev_mode
 create_db()
 from soc import get_soc
 from cycle_data import cycle_calculations
+import requests
 
-ser = serial.Serial('/dev/ttyACM0', 9600)
 
-while True:
-    try:
-        line = ser.readline().decode().strip()
-        voltage, current, temperature, status = map(float, line.split(','))
+def fetch_status():
+    url = "http://127.0.0.1:5000/api/state"
+    response = requests.get(url)
 
-        # measuring the soc
-        soc = get_soc(mode,current)
-        timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    if response.status_code == 200:
+        data = response.json()
+        return "Charging" if data[0][1] else "Discharging"  
+    else:
+        print("Failed to fetch data. Status code:", response.status_code)
+        print("Response content:", response.text)
 
-        # inserting instantaenous data to database
-        insert_to_instant_db(timestamp,voltage,current,temperature,soc,status)
-        print(f"{timestamp}: Voltage: {voltage} V, Current: {current} A, Temperature: {temperature}, Mode: {mode}")
+if __name__ == '__main__':
+    ser = serial.Serial('/dev/ttyACM0', 9600)
+    while True:
+        try:
+            line = ser.readline().decode().strip()
+            print(line)
+            voltage, current, temperature, status = map(float, line.split(','))
 
-        # check if cycle has completed
-        prev_mode = get_prev_mode()
-        if prev_mode == None:
-            prev_mode = 0
+            # measuring the soc
+            soc = get_soc(status,current)
+            timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-        cycle = 1 if prev_mode and not mode else 0
-        if cycle:
-        # if cycle as completed do feature calculation
-            cycle_data = cycle_calculations()
-        # insert cycle data row to database
-            insert_to_cycle_db(cycle_data)
+            # inserting instantaenous data to database
+            insert_to_instant_db(timestamp,voltage,current,temperature,soc,status)
+            # print(f"{timestamp}: Voltage: {voltage} V, Current: {current} A, Temperature: {temperature}, Mode: {status}")
+            # check if cycle has completed
+            prev_mode = get_prev_mode()
+            if prev_mode == None:
+                prev_mode = 0
 
-        time.sleep(10)
+            cycle = 1 if prev_mode and not status else 0
+            if cycle:
+            # if cycle as completed do feature calculation
+                cycle_data = cycle_calculations()
+            # insert cycle data row to database
+                insert_to_cycle_db(cycle_data)
 
-    except KeyboardInterrupt:
-        print("Communication Breaked!")
-        break
-        
-ser.close()
-close_db()
+            # communicate form python to arduino
+            command = fetch_status()
+            ser.write(command.encode('utf-8'))
+
+
+            time.sleep(10)
+
+        except KeyboardInterrupt:
+            print("Communication Breaked!")
+            break
+            
+    ser.close()
+    close_db()

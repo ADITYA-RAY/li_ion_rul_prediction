@@ -55,9 +55,9 @@
       <div class="exercise-table">
         <h2 style="padding-bottom: 25px">
           ON/OFF Control
-          <label class="switch">
-            <input type="checkbox" />
-            <span class="slider round"></span>
+          <label class="switch" >
+            <input type="checkbox" id="changeStatus"  />
+            <span class="slider round" onclick="changeStatus()" ></span>
           </label>
         </h2>
 
@@ -105,7 +105,7 @@
 
       <div class="socc-graph">
         <h2>State of Charge Curve</h2>
-        <canvas  width="400" id="socc"></canvas>
+        <canvas width="400" id="socc"></canvas>
       </div>
     </div>
 

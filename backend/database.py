@@ -6,6 +6,19 @@ cursor = conn.cursor()
 def create_db():
     try:
         cursor.execute('''
+            CREATE TABLE IF NOT EXISTS status (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                status INTEGER
+            )
+        ''')
+
+        cursor.execute('''
+            INSERT INTO status (status)
+            VALUES (?)
+        ''', ("1"))
+    
+
+        cursor.execute('''
             CREATE TABLE IF NOT EXISTS instant_data (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 timestamp TEXT,
@@ -75,6 +88,21 @@ def insert_to_cycle_db(data):
                 data.average_charging_current ,
                 data.total_time))
         conn.commit()
+
+
+def update_status(status):
+        cursor.execute('''
+            UPDATE status
+            SET status = ?
+            WHERE id = ?
+        ''', (status, 1))
+        conn.commit()
+
+# def get_status():
+#     cursor.execute('SELECT * FROM instant_data')
+#     rows = cursor.fetchall()
+#     return rows[0][0]
+
 
 def get_instant_db():
     cursor.execute('SELECT * FROM instant_data')
