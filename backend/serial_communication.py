@@ -4,7 +4,7 @@ import time
 from database import create_db, insert_to_instant_db, close_db, get_prev_mode
 create_db()
 from soc import get_soc
-from cycle_data import cycle_calculations
+# from cycle_data import cycle_calculations
 import requests
 
 
@@ -27,6 +27,18 @@ if __name__ == '__main__':
             print(line)
             voltage, current, temperature, status = map(float, line.split(','))
 
+            prev_mode = get_prev_mode()
+            if prev_mode == None:
+                prev_mode = 0
+            # print(prev_mode, int(status))
+            # cycle = 1 if prev_mode and not int(status) else 0
+            # if cycle:
+            #     print("hello")
+            # # if cycle as completed do feature calculation
+            #     cycle_data = cycle_calculations()
+            # # insert cycle data row to database
+            #     insert_to_cycle_db(cycle_data)
+            
             # measuring the soc
             soc = get_soc(status,current)
             timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -35,21 +47,11 @@ if __name__ == '__main__':
             insert_to_instant_db(timestamp,voltage,current,temperature,soc,status)
             # print(f"{timestamp}: Voltage: {voltage} V, Current: {current} A, Temperature: {temperature}, Mode: {status}")
             # check if cycle has completed
-            prev_mode = get_prev_mode()
-            if prev_mode == None:
-                prev_mode = 0
 
-            cycle = 1 if prev_mode and not status else 0
-            if cycle:
-            # if cycle as completed do feature calculation
-                cycle_data = cycle_calculations()
-            # insert cycle data row to database
-                insert_to_cycle_db(cycle_data)
 
             # communicate form python to arduino
             command = fetch_status()
             ser.write(command.encode('utf-8'))
-
 
             time.sleep(10)
 

@@ -2,7 +2,7 @@ from database import get_prev_cycle_index, get_cycle_db
 from variables import dx
 
 prev_index = get_prev_cycle_index()
-db = get_cycle_db
+db = get_cycle_db()
 dx = dx()
 data = {}
 
@@ -32,18 +32,18 @@ def cycle_calculations():
             
             discharging_current += row[2]
 
-    discharge_points = len(row) - charge_points
+    discharge_points = len(db) - charge_points
 
-    data[prev_index] = index
-    data[discharge_time] = dx * discharge_points
-    data[charging_time] = dx * charge_points
-    data[total_time] = len(db) * dx
-    data[max_voltage_discharge] = max_voltage_discharge
-    data[min_voltage_discharge] = min_voltage_discharge
-    data[time_above_3_1v] = dx * above_voltage
-    data[decrement_time_3_2v_3_1v] = dx * between_voltage
-    data[average_discharge_current] = discharging_current / len(db)
-    data[average_charging_current] = charging_current / len(db)
+    data["prev_index"] = index
+    data["discharge_time"] = dx * discharge_points
+    data["charging_time"] = dx * charge_points
+    data["total_time"] = len(db) * dx
+    data["max_voltage_discharge"] = max_voltage_discharge
+    data["min_voltage_discharge"] = min_voltage_discharge
+    data["time_above_3_1v"] = dx * above_voltage
+    data["decrement_time_3_2v_3_1v"] = dx * between_voltage
+    data["average_discharge_current"] = discharging_current / len(db)
+    data["average_charging_current"] = charging_current / len(db)
 
     return data
 
