@@ -5,7 +5,7 @@ var temperature = [];
 var socc = [];
 
 window.onload = function getData() {
-  fetch("http://127.0.0.1:5000/api/instant_data")
+  fetch("http://192.168.1.9:5000/api/instant_data")
     .then((response) => response.json())
     .then((data) => {
       console.log(data[0]);
@@ -282,7 +282,7 @@ window.onload = function getData() {
 
 function changeStatus() {
   const status = document.getElementById("changeStatus").checked;
-  const apiUrl = "http://127.0.0.1:5000/api/status";
+  const apiUrl = "http://192.168.1.9:5000/api/status";
   const headers = new Headers({
     "Content-Type": "application/json",
   });
