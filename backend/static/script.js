@@ -5,7 +5,7 @@ var temperature = [];
 var socc = [];
 
 window.onload = function getData() {
-  fetch("http://127.0.0.1:5000//api/instant_data")
+  fetch("http://127.0.0.1:5000/api/instant_data")
     .then((response) => response.json())
     .then((data) => {
       console.log(data[0]);
