@@ -1,2 +1,3 @@
 /env
 /backend/lion_dataset.db
+/backend/__pycache__
