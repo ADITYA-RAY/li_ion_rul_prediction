@@ -6,10 +6,11 @@ create_db()
 from soc import get_soc
 # from cycle_data import cycle_calculations
 import requests
+from variables import uri
 
 
 def fetch_status():
-    url = "http://192.168.1.9:5000/api/state"
+    url = uri() + "/api/state"
     response = requests.get(url)
 
     if response.status_code == 200:
