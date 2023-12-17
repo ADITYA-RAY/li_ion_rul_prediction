@@ -10,7 +10,7 @@ from variables import uri
 
 
 def fetch_status():
-    url = "http://192.168.1.10:5000/api/state"
+    url = "http://192.168.1.8:5000/api/state"
     response = requests.get(url)
 
     if response.status_code == 200:

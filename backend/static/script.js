@@ -4,7 +4,7 @@ var current = [];
 var temperature = [];
 var socc = [];
 
-urlproxy = "http://192.168.1.10:5000"
+urlproxy = "http://192.168.1.8:5000"
 
 window.onload = function getData() {
   fetch(`${urlproxy}/api/instant_data`)
